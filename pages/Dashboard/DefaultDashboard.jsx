@@ -71,12 +71,12 @@ const KPI = ({ title, value, meta }) => (
 const ProjectionsCard = ({ data }) => (
   <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 h-full">
     <div className="text-sm font-medium text-gray-800 mb-3">Projections vs Actuals</div>
-    <div style={{ height: 120 }}>
+    <div style={{ height: 160 }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#9CA3AF" }} />
           <CartesianGrid vertical={false} stroke="#F3F4F6" />
-          <Bar dataKey="value" fill="#DBEAFE" radius={[6, 6, 0, 0]} barSize={12} />
+          <Bar dataKey="value" fill="#DBEAFE" radius={[6, 6, 0, 0]} barSize={15} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -208,7 +208,7 @@ export default function DefaultDashboard() {
 
   {/* KPI row + Projections */}
   <div className="flex flex-col lg:flex-row mb-4 gap-4">
-    <div className="flex flex-wrap gap-4 w-108 h-63  justify-evenly">
+    <div className="flex flex-wrap gap-4  h-63  justify-evenly">
       {KPI_CARDS.map((k) => (
         <KPI key={k.id} {...k} />
       ))}

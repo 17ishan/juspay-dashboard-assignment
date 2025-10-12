@@ -58,7 +58,7 @@ const NotificationPanel = () => {
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+      <div className="flex-1  scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent overflow-y-scroll [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {/* Notifications Section */}
         <div className="bg-white">
           {notifications.map((notification, index) => (
