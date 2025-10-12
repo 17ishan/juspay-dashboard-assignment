@@ -1,16 +1,33 @@
-# React + Vite
+# 🧭 Juspay Dashboard Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **responsive React + Tailwind CSS dashboard** built as part of the Juspay frontend assignment.  
+The design closely follows the provided reference UI — featuring a clean layout, subtle shadows, smooth interactions, and pixel-perfect alignment.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- ⚡ **Modern Tech Stack:** React + Vite + Tailwind CSS (latest version)
+- 🧩 **Modular Components:** Sidebar, Navbar, and Dashboard sections built with reusable logic
+- 🌙 **Light Mode Focused:** Clean, minimal, and accessible UI (dark mode toggle available but themed for light)
+- 🔍 **Interactive Search Bar:** Matches the exact design from the reference image, fully responsive
+- 📊 **Order List Table:** Scrollable section with hidden scrollbar and compact row spacing
+- 🧭 **Responsive Layout:** Works seamlessly across all screen sizes
+- 🎯 **Filter & Pagination:** Built-in filtering and pagination support
+- 💡 **Performance Optimized:** Lightweight and fast using Vite bundler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Technology | Purpose |
+|-------------|----------|
+| **React 18+** | Frontend Framework |
+| **Vite** | Lightning-fast development environment |
+| **Tailwind CSS (v4+)** | Styling framework |
+| **Lucide Icons** | Icon library for consistent visual design |
+
+---
+
+## 📁 Folder Structure
+
