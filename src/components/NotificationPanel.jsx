@@ -51,7 +51,7 @@ const NotificationPanel = () => {
   };
 
   return (
-    <div className="fixed top-0 right-0 w-80 h-screen bg-white shadow-2xl flex flex-col border-l border-gray-100">
+    <div className="fixed top-0 right-0 w-80 h-screen bg-white shadow-2xl  flex-col border-l border-gray-100  hidden md:flex">
       {/* Header */}
       <div className="px-4 py-3.5 border-b border-gray-200 bg-white">
         <h2 className="text-base font-semibold text-gray-900">Notifications</h2>

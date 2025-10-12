@@ -20,7 +20,7 @@ import {
 const SIDEBAR_FULL = "w-56"; 
 const SIDEBAR_COLLAPSED = "w-20"; // icons only
 
-export default function Sidebar() {
+export default function Sidebar({isCollapsed,onToggleSidebar}) {
   const [mobileOpen, setMobileOpen] = useState(false); // overlay on small screens
   const [collapsed, setCollapsed] = useState(false); 
   const [profileOpen, setProfileOpen] = useState(false); // nested user profile
@@ -58,8 +58,8 @@ export default function Sidebar() {
 
   // Persist collapse preference for tablet
   useEffect(() => {
-    localStorage.setItem("sidebar-collapsed", collapsed ? "true" : "false");
-  }, [collapsed]);
+    localStorage.setItem("sidebar-collapsed", isCollapsed ? "true" : "false");
+  }, [isCollapsed]);
 
   // Close mobile overlay on Escape
   useEffect(() => {
@@ -111,11 +111,11 @@ export default function Sidebar() {
   // Nav item rendering using NavLink children as function to detect isActive
   function NavItem({ to, icon1, icon, label, end = false }) {
     return (
-      <NavLink to={to} end={end} className="relative block px-2 " title={collapsed ? label : undefined}>
+      <NavLink to={to} end={end} className="relative block px-2 " title={isCollapsed ? label : undefined}>
         {({ isActive }) => (
           <div
             className={`relative flex items-center gap-3   ${
-              collapsed ? "justify-center" : "justify-start"
+               "justify-start"
             } px-2 py-1 rounded-lg transition-colors duration-200 text-sm  ${
               isActive
                 ? "bg-gray-100  text-black "
@@ -125,7 +125,7 @@ export default function Sidebar() {
             {/* left active vertical pill when active & not collapsed */}
 
             
-            {!collapsed && isActive && (
+            {!isCollapsed && isActive && (
               <span
                 aria-hidden
                 className="absolute left-0 -ml-3 w-1 h-4 rounded-full bg-black "
@@ -134,7 +134,7 @@ export default function Sidebar() {
 
             <div
               className={`flex items-center justify-center ${
-                collapsed ? "w-9 h-9" : "w-6 h-6"
+                isCollapsed ? "w-9 h-9" : "w-6 h-6"
               } text-gray-600 `}
               aria-hidden
             >
@@ -143,7 +143,7 @@ export default function Sidebar() {
               {icon}
             </div>
 
-            {!collapsed && <div className="flex-1">{label}</div>}
+            {!isCollapsed && <div className="flex-1">{label}</div>}
           </div>
         )}
       </NavLink>
@@ -152,22 +152,12 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile overlay dim */}
-      <div
-        className={`w-[15%] inset-0 z-40 md:hidden transition-opacity duration-200  ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-        aria-hidden={!mobileOpen}
-      >
-        <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
-      </div>
-
       {/* Sidebar */}
-      <aside
+      {/* <aside
         ref={sidebarRef}
-        className={`   top-0 left-0 bottom-0 z-50 transform transition-transform duration-200 ease-out 
-          ${collapsed ? SIDEBAR_COLLAPSED : SIDEBAR_FULL}
-          bg-white  border-r border-gray-100 
+        className={` ${isCollapsed?"absolute  left-[-200px]":" absolute left-0"}   top-0  bottom-0 z-50 transform transition-transform duration-200 ease-out 
+          
+          bg-white  border-r border-gray-100   md:block
           ${
             // for mobile: hide offscreen unless mobileOpen
             typeof window !== "undefined" && window.innerWidth < 768
@@ -178,10 +168,21 @@ export default function Sidebar() {
           }
         `}
         aria-label="Main sidebar"
+      > */}
+
+
+       <aside
+        ref={sidebarRef}
+        className={` ${isCollapsed?" left-[-300px] absolute md:relative md:left-0":"  left-0  absolute md:relative"}   z-50 transform transition-transform duration-200 ease-out 
+          
+          bg-white  border-r border-gray-100   
+        
+        `}
+        aria-label="Main sidebar"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-3 p-2 ">
-          <div className={`flex items-center gap-3 ${collapsed ? "justify-center w-full" : ""}`}>
+          <div className={`flex items-center gap-3 ${isCollapsed ? "justify-center w-full" : ""}`}>
             <div
               className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${
                 collapsed ? "mx-auto" : ""
@@ -200,7 +201,7 @@ export default function Sidebar() {
 
           <div className="flex items-center gap-2">
             {/* collapse toggle (visible md+) */}
-            <button
+            {/* <button
               type="button"
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
               onClick={() => setCollapsed((s) => !s)}
@@ -208,17 +209,23 @@ export default function Sidebar() {
               title={collapsed ? "Expand" : "Collapse"}
             >
               <ChevronRight size={16} className={`transform ${collapsed ? "rotate-180" : ""}`} />
-            </button>
+            </button> */}
 
             {/* mobile toggle (visible on small screens) */}
-            <button
-              type="button"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              onClick={() => setMobileOpen((s) => !s)}
-              className="md:hidden inline-flex p-2 rounded-md hover:bg-gray-100  transition"
+            <div
+             
+              onClick={ onToggleSidebar }
+              aria-label={onToggleSidebar ? "Close menu" : "Open menu"}
+              
+              className="md:hidden z-[100] inline-flex p-2 rounded-md hover:bg-gray-100  transition"
             >
-              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
+              {onToggleSidebar ? <X size={18} /> : <Menu size={18} />}
+            </div>
+
+
+
+        
+
           </div>
         </div>
 
@@ -226,12 +233,12 @@ export default function Sidebar() {
         <nav className="px-2 pb-6 overflow-y-auto  " style={{ maxHeight: "calc(100vh - 88px)" }}>
           {/* Favorites / Recently */}
           <div className={`mb-4 ${collapsed ? "text-center" : ""}`}>
-            <div className={`flex items-center justify-between ${collapsed ? "flex-col" : ""}`}>
-              <div className={`text-sm ${collapsed ? "hidden" : "text-gray-400"}`}>Favorites</div>
-              <div className={`text-xs ${collapsed ? "hidden" : "text-gray-300"}`}>Recently</div>
+            <div className={`flex items-center justify-between ${isCollapsed ? "flex-col" : ""}`}>
+              <div className={`text-sm ${isCollapsed ? "hidden" : "text-gray-400"}`}>Favorites</div>
+              <div className={`text-xs ${isCollapsed ? "hidden" : "text-gray-300"}`}>Recently</div>
             </div>
 
-            {!collapsed ? (
+            {!isCollapsed ? (
               <ul className="mt-3 space-y-2">
                 {favorites.map((f) => (
                   <li
@@ -252,7 +259,7 @@ export default function Sidebar() {
           </div>
 
           {/* Dashboards header */}
-          <div className={`${collapsed ? "sr-only" : "text-sm text-gray-400 uppercase mb-2"}`}>Dashboards</div>
+          <div className={`${isCollapsed ? "sr-only" : "text-sm text-gray-400 uppercase mb-2"}`}>Dashboards</div>
 
           {/* Dashboards list */}
           <div className="mb-2  ">
@@ -264,7 +271,7 @@ export default function Sidebar() {
           </div>
 
           {/* Pages */}
-          <div className={`${collapsed ? "sr-only" : "text-sm text-gray-400 uppercase mb-2 "}`}>Pages</div>
+          <div className={`${isCollapsed ? "sr-only" : "text-sm text-gray-400 uppercase mb-2 "}`}>Pages</div>
 
           <div className="">
             {pages.map((p) => {
@@ -276,19 +283,19 @@ export default function Sidebar() {
                       to={`/${p.label.toLowerCase().replace(/\s+/g, "-")}`}
                       className={({ isActive }) =>
                         `relative flex items-center gap-3 px-3 py-1 rounded-lg transition-colors duration-200 text-sm ${
-                          collapsed ? "justify-center" : ""
+                          isCollapsed ? "justify-center" : ""
                         } ${
                           isActive
                             ? "bg-gray-100  text-black "
                             : "text-black hover:bg-gray-50 "
                         }`
                       }
-                      title={collapsed ? p.label : undefined}
+                      title={isCollapsed ? p.label : undefined}
                     >
                       {/* left active pill */}
                       {({ isActive }) => (
                         <>
-                          {!collapsed && isActive && (
+                          {!isCollapsed && isActive && (
                             <span
                               aria-hidden
                               className="absolute left-0 -ml-3 w-1.5 h-8 rounded-full  dark:bg-white"
@@ -297,7 +304,7 @@ export default function Sidebar() {
                           <div className="w-6 h-6 flex items-center justify-center text-black ">
                             {p.icon}
                           </div>
-                          {!collapsed && <div className="flex-1">{p.label}</div>}
+                          {!isCollapsed && <div className="flex-1">{p.label}</div>}
                         </>
                       )}
                     </NavLink>
@@ -319,9 +326,9 @@ export default function Sidebar() {
                     aria-expanded={profileOpen}
                     aria-controls="profile-sublist"
                     className={`w-full flex items-center   px-3 py-1 rounded-lg transition-colors duration-200 text-sm text-black ${
-                      collapsed ? "justify-center" : ""
+                      isCollapsed ? "justify-center" : ""
                     } text-black  hover:bg-gray-50 `}
-                    title={collapsed ? p.label : undefined}
+                    title={isCollapsed ? p.label : undefined}
                   >
                     <ChevronRight
                       size={14}
@@ -331,7 +338,7 @@ export default function Sidebar() {
                       {p.icon}
                     </div>
 
-                    {!collapsed && (
+                    {!isCollapsed && (
                       <>
                         <div className="flex text-sm font-medium ">{p.label}</div>
                       </>
@@ -346,7 +353,7 @@ export default function Sidebar() {
                     }`}
                     aria-hidden={!profileOpen}
                   >
-                    <ul className={`pl-2 ${collapsed ? "sr-only" : ""}`}>
+                    <ul className={`pl-2 ${isCollapsed ? "sr-only" : ""}`}>
                       {p.sub.map((s) => (
                         <li key={s}>
                           <NavLink

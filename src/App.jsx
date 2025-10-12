@@ -12,13 +12,20 @@ function App() {
   const location = useLocation();
   const isOrdersPage = location.pathname === '/orders';
 
+
+   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
   return (
     <div className="w-full [font-family:Inter] min-h-screen bg-bg-light dark:bg-bg-dark transition-colors">
       <div className="flex">
-        <Sidebar />
+        <Sidebar isCollapsed={isCollapsed} onToggleSidebar={toggleSidebar}  />
 
-        <div className={`${isOrdersPage ? 'w-full' : 'w-[65%]'}`}>
-          <Navbar />
+        <div className={`${isOrdersPage ? 'w-full' : 'md:w-[65%]'}`}>
+          <Navbar  onToggleSidebar={toggleSidebar}  />
           <main className="overflow-x-auto h-[650px]">
             <Routes>
               <Route path="/" element={<DefaultDashboard />} />

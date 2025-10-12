@@ -10,7 +10,7 @@ import {
   Search,
 } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
     <nav className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-gray-200 bg-white">
       {/* Left Section */}
       <div className="flex items-center space-x-4">
-        <button className="p-2 rounded-md hover:bg-gray-100">
+        <button onClick={ onToggleSidebar } className="p-2 rounded-md hover:bg-gray-100">
           <Menu className="w-5 h-5 text-gray-800" />
         </button>
 

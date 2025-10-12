@@ -220,12 +220,12 @@ export default function DefaultDashboard() {
   </div>
 
   {/* Revenue chart + Map */}
-  <div className="flex flex-col lg:flex-row gap-4 mb-4">
+  <div className="flex flex-col lg:flex-row gap-4 mb-4 ">
     <div className="w-full  ">
       <RevenueArea data={REVENUE_SERIES} />
     </div>
 
-    <div className="w-[202px] ">
+    <div className="md:w-[202px] ">
       <MapAndLocations />
     </div>
   </div>
@@ -236,7 +236,7 @@ export default function DefaultDashboard() {
       <ProductsTable data={TOP_PRODUCTS} />
     </div>
 
-    <div className="flex-shrink-0 w-[202px] ">
+    <div className="flex-shrink-0 md:w-[202px] ">
       <DonutCard data={DONUT_DATA} />
     </div>
   </div>
